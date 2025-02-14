@@ -1,13 +1,31 @@
 import express from 'express';
 import {injectCoreServices} from "@root/middlewares/injectCoreServices";
 import env from "@root/env";
-import {AppDataSource} from "@root/data-source";
+import {HRDataSource} from "@root/datasources/hr/data-source";
+import {PayrollDataSource} from "@root/datasources/payroll/data-source";
+import {User} from "@root/datasources/payroll/entity/User";
 
-AppDataSource.initialize()
-    .then(() => console.log('Database connection established'))
+import { ObjectId } from 'mongodb'
+
+export const toObjectId = (value: string | ObjectId): ObjectId => {
+    return typeof value === 'string' ? new ObjectId(value) : value
+}
+
+HRDataSource.initialize()
+    .then(() => console.log('PSQL: HR database connection established'))
     .catch((err) => {
         console.error(err);
     });
+
+PayrollDataSource.initialize()
+    .then(() => {
+        console.log('MONGODB: Payroll database connection established')
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+
 
 const app = express();
 

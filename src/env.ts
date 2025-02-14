@@ -22,11 +22,16 @@ const env_schema = z.object({
         .optional()
         .default('development'),
     APP_PORT: z.string().regex(/^\d+$/).transform(Number).optional(),
-    DB_HOST: z.string().ip(),
-    DB_PORT: z.string().regex(/^\d+$/).transform(Number),
-    DB_USERNAME: z.string(),
-    DB_PASSWORD: z.string(),
-    DB_DATABASE: z.string(),
+    PG_HOST: z.string().ip(),
+    PG_PORT: z.string().regex(/^\d+$/).transform(Number),
+    PG_USERNAME: z.string(),
+    PG_PASSWORD: z.string(),
+    PG_DATABASE: z.string(),
+    MONGO_HOST: z.string().ip(),
+    MONGO_PORT: z.string().regex(/^\d+$/).transform(Number),
+    MONGO_USERNAME: z.string(),
+    MONGO_PASSWORD: z.string(),
+    MONGO_DATABASE: z.string(),
 })
 
 const env = env_schema.parse(process.env);
