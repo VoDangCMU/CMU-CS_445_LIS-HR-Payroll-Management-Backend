@@ -3,7 +3,6 @@ import {injectCoreServices} from "@root/middlewares/injectCoreServices";
 import env from "@root/env";
 import {HRDataSource} from "@root/datasources/hr/data-source";
 import {PayrollDataSource} from "@root/datasources/payroll/data-source";
-import {User} from "@root/datasources/payroll/entity/User";
 
 import { ObjectId } from 'mongodb'
 
