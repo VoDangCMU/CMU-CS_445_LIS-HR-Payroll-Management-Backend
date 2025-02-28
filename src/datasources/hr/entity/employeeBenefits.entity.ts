@@ -1,18 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Employee } from './employee.entity';
-import { BenefitsPlan } from './benefits_plan.entity';
+import { BenefitsPlan } from './benefitsPlan.entity';
 
 @Entity('employee_benefits')
 export class EmployeeBenefits {
-    @PrimaryGeneratedColumn()
-    record_id: number;
+    @PrimaryGeneratedColumn({type: 'bigint'})
+    id: number;
 
     @ManyToOne(() => Employee)
     employee: Employee;
 
     @ManyToOne(() => BenefitsPlan)
-    benefits_plan: BenefitsPlan;
+    benefitsPlan: BenefitsPlan;
 
-    @Column({ type: 'date' })
-    start_date: Date;
+    @Column()
+    startDate: Date;
 }

@@ -4,12 +4,6 @@ import env from "@root/env";
 import {HRDataSource} from "@root/datasources/hr/data-source";
 import {PayrollDataSource} from "@root/datasources/payroll/data-source";
 
-import { ObjectId } from 'mongodb'
-
-export const toObjectId = (value: string | ObjectId): ObjectId => {
-    return typeof value === 'string' ? new ObjectId(value) : value
-}
-
 HRDataSource.initialize()
     .then(() => console.log('PSQL: HR database connection established'))
     .catch((err) => {
@@ -23,7 +17,6 @@ PayrollDataSource.initialize()
     .catch((err) => {
         console.error(err);
     });
-
 
 
 const app = express();

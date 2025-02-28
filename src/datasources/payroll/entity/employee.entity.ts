@@ -1,10 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from 'typeorm';
-import {Department} from "@root/datasources/hr/entity/department.entity";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {ObjectId} from "mongodb";
 
 @Entity('employees')
 export class Employee {
-    @PrimaryGeneratedColumn({ type: 'bigint' })
-    id: number;
+    @PrimaryGeneratedColumn()
+    _id: ObjectId;
 
     @Column({ type: 'varchar', length: 255 })
     fullname: string;
@@ -35,7 +35,4 @@ export class Employee {
 
     @Column({ type: 'bigint' })
     salaryCoefficient: number;
-
-    @ManyToOne(() => Department, {onDelete: 'CASCADE' })
-    department: Department;
 }
