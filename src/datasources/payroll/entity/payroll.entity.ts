@@ -2,10 +2,10 @@ import {Entity, Column, ObjectIdColumn} from "typeorm"
 import {ObjectId} from "mongodb";
 
 
-@Entity('payroll_records')  
-export class Payroll {
+@Entity('payroll_records')
+export class PayrollRecord {
     @ObjectIdColumn()
-    _id: ObjectId;
+    id: ObjectId;
 
     @Column()
     employeeID: number;
@@ -23,5 +23,5 @@ export class Payroll {
     deductions: number;
 
     @Column({ type: 'bigint' })
-    benefitsPaid: number;
+    benefits_paid: number;
 }

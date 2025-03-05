@@ -22,7 +22,7 @@ export class Employee {
     address: string;
 
     @Column({ type: 'enum', enum: ['Full-time', 'Part-time', 'Contract'] })
-    employment_type: string;
+    employmentType: string;
 
     @Column({ type: 'enum', enum: ['Active', 'Inactive', 'On Leave'] })
     status: string;
