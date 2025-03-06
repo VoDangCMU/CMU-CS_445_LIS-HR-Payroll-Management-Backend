@@ -12,5 +12,5 @@ export class BenefitsPlan {
     description: string;
 
     @Column({ type: 'bigint' })
-    cost_per_month: number;
+    costPerMonth: number;
 }

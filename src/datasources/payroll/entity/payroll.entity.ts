@@ -23,5 +23,5 @@ export class PayrollRecord {
     deductions: number;
 
     @Column({ type: 'bigint' })
-    benefits_paid: number;
+    benefitsPaid: number;
 }
