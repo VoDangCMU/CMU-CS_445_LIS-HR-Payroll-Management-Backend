@@ -3,14 +3,8 @@ import {injectCoreServices} from "@root/middlewares/injectCoreServices";
 import env from "@root/env";
 import {HRDataSource} from "@root/datasources/hr/data-source";
 import {PayrollDataSource} from "@root/datasources/payroll/data-source";
-
-import { ObjectId } from 'mongodb'
 import * as path from "node:path";
 import fs from "fs";
-
-export const toObjectId = (value: string | ObjectId): ObjectId => {
-    return typeof value === 'string' ? new ObjectId(value) : value
-}
 
 HRDataSource.initialize()
     .then(() => console.log('PSQL: HR database connection established'))

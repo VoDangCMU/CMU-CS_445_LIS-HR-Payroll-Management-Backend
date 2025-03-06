@@ -3,15 +3,15 @@ import { Employee } from './employee.entity';
 
 @Entity('vacation_records')
 export class VacationRecord {
-    @PrimaryGeneratedColumn()
-    record_id: number;
+    @PrimaryGeneratedColumn({type: 'bigint'})
+    id: number;
 
     @ManyToOne(() => Employee)
     employee: Employee;
 
     @Column({ type: 'date' })
-    vacation_date: Date;
+    vacationDate: Date;
 
     @Column({ type: 'bigint' })
-    vacation_days: number;
+    vacationDays: number;
 }
