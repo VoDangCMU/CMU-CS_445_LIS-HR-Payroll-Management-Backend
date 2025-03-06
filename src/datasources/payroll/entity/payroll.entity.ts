@@ -1,26 +1,27 @@
 import {Entity, Column, ObjectIdColumn} from "typeorm"
+import {ObjectId} from "mongodb";
 
 
-@Entity('payroll_records')  
+@Entity('payroll_records')
 export class PayrollRecord {
     @ObjectIdColumn()
-    payroll_id: number;
+    id: ObjectId;
 
     @Column()
-    employee_id: number;
+    employeeID: number;
 
     @Column({ type: 'date' })
-    pay_date: Date;
+    payDate: Date;
 
     @Column({ type: 'bigint' })
-    gross_salary: number;
+    grossSalary: number;
 
     @Column({ type: 'bigint' })
-    net_salary: number;
+    netSalary: number;
 
     @Column({ type: 'bigint' })
     deductions: number;
 
     @Column({ type: 'bigint' })
-    benefits_paid: number;
+    benefitsPaid: number;
 }
