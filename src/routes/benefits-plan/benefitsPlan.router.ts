@@ -73,4 +73,4 @@ benefitsPlanRouter.delete("/:id", async (req: Request, res: Response) => {
     }
 });
 
-export default benefitsPlanRouter;
+module.exports = benefitsPlanRouter;

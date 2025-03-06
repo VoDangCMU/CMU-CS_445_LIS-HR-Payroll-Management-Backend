@@ -73,4 +73,4 @@ departmentRouter.delete("/:id", async (req: Request, res: Response) => {
     }
 });
 
-export default departmentRouter;
+module.exports = departmentRouter;

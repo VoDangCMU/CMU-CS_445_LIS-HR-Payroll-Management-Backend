@@ -90,4 +90,4 @@ vacationRouter.delete("/:id", async (req: Request, res: Response) => {
     }
 });
 
-export default vacationRouter;
+module.exports = vacationRouter;

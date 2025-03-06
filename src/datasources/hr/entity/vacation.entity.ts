@@ -6,7 +6,7 @@ export class VacationRecord {
     @PrimaryGeneratedColumn({type: 'bigint'})
     id: number;
 
-    @ManyToOne(() => Employee)
+    @ManyToOne(() => Employee, {onDelete: "CASCADE"})
     employee: Employee;
 
     @Column({ type: 'date' })

@@ -7,10 +7,10 @@ export class EmployeeBenefits {
     @PrimaryGeneratedColumn({type: 'bigint'})
     id: number;
 
-    @ManyToOne(() => Employee)
+    @ManyToOne(() => Employee, {onDelete: "CASCADE"})
     employee: Employee;
 
-    @ManyToOne(() => BenefitsPlan)
+    @ManyToOne(() => BenefitsPlan, {onDelete: "CASCADE"})
     benefitsPlan: BenefitsPlan;
 
     @Column()

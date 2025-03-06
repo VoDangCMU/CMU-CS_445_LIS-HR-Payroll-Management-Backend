@@ -74,4 +74,4 @@ payrollRouter.delete("/:id", async (req: Request, res: Response) => {
     }
 });
 
-export default payrollRouter;
+module.exports = payrollRouter;
