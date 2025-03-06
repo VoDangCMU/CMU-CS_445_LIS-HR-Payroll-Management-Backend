@@ -12,7 +12,8 @@ departmentRouter.post("/", async (req: Request, res: Response) => {
         const savedDepartment = await departmentRepository.save(department);
         res.Ok(savedDepartment);
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error saving department");
     }
 });
 
@@ -22,7 +23,8 @@ departmentRouter.get("/", async (req: Request, res: Response) => {
         const departments = await departmentRepository.find();
         res.Ok(departments);
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving departments");
     }
 });
 
@@ -37,7 +39,8 @@ departmentRouter.get("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Department not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving department");
     }
 });
 
@@ -54,7 +57,8 @@ departmentRouter.put("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Department not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error updating department");
     }
 });
 
@@ -69,7 +73,8 @@ departmentRouter.delete("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Department not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error deleting department");
     }
 });
 
