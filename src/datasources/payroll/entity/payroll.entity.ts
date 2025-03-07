@@ -1,6 +1,5 @@
-import {Entity, Column, ObjectIdColumn} from "typeorm"
-import {ObjectId} from "mongodb";
-
+import {Column, Entity, ObjectIdColumn} from "typeorm"
+import {ObjectId} from "bson";
 
 @Entity('payroll_records')
 export class PayrollRecord {
@@ -10,18 +9,18 @@ export class PayrollRecord {
     @Column()
     employeeID: number;
 
-    @Column({ type: 'date' })
+    @Column({type: 'date'})
     payDate: Date;
 
-    @Column({ type: 'bigint' })
+    @Column({type: 'bigint'})
     grossSalary: number;
 
-    @Column({ type: 'bigint' })
+    @Column({type: 'bigint'})
     netSalary: number;
 
-    @Column({ type: 'bigint' })
+    @Column({type: 'bigint'})
     deductions: number;
 
-    @Column({ type: 'bigint' })
+    @Column({type: 'bigint'})
     benefitsPaid: number;
 }
