@@ -10,9 +10,10 @@ benefitsPlanRouter.post("/", async (req: Request, res: Response) => {
     const benefitsPlan = benefitsPlanRepository.create(req.body);
     try {
         const savedPlan = await benefitsPlanRepository.save(benefitsPlan);
-        res.Ok(savedPlan);
+        res.Ok(savedPlan); // Using your custom response function
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error saving benefits plan");
     }
 });
 
@@ -20,9 +21,10 @@ benefitsPlanRouter.post("/", async (req: Request, res: Response) => {
 benefitsPlanRouter.get("/", async (req: Request, res: Response) => {
     try {
         const plans = await benefitsPlanRepository.find();
-        res.Ok(plans);
+        res.Ok(plans); // Using your custom response function
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving benefits plans");
     }
 });
 
@@ -32,12 +34,13 @@ benefitsPlanRouter.get("/:id", async (req: Request, res: Response) => {
     try {
         const plan = await benefitsPlanRepository.findOneBy({ id: Number(id) });
         if (plan) {
-            res.Ok(plan);
+            res.Ok(plan); // Using your custom response function
         } else {
             res.BadRequest("Benefits plan not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving benefits plan");
     }
 });
 
@@ -49,12 +52,13 @@ benefitsPlanRouter.put("/:id", async (req: Request, res: Response) => {
         if (plan) {
             benefitsPlanRepository.merge(plan, req.body);
             const updatedPlan = await benefitsPlanRepository.save(plan);
-            res.Ok(updatedPlan);
+            res.Ok(updatedPlan); // Using your custom response function
         } else {
             res.BadRequest("Benefits plan not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error updating benefits plan");
     }
 });
 
@@ -64,12 +68,13 @@ benefitsPlanRouter.delete("/:id", async (req: Request, res: Response) => {
     try {
         const result = await benefitsPlanRepository.delete(Number(id));
         if (result.affected) {
-            res.Ok({ message: "Benefits plan deleted successfully" });
+            res.Ok({ message: "Benefits plan deleted successfully" }); // Using your custom response function
         } else {
             res.BadRequest("Benefits plan not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error deleting benefits plan");
     }
 });
 
