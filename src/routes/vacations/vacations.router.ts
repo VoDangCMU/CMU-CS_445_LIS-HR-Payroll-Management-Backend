@@ -1,92 +1,97 @@
 import express, { Request, Response } from "express";
-import { VacationRecord } from "@root/datasources/hr/entity/vacation.entity";
+import { Vacation } from "@root/datasources/hr/entity/vacation.entity";
 import { Employee } from "@root/datasources/hr/entity/employee.entity";
 import { HRDataSource } from "@root/datasources/hr/data-source";
 
 const vacationRouter = express.Router();
-const vacationRepository = HRDataSource.getRepository(VacationRecord);
+const vacationRepository = HRDataSource.getRepository(Vacation);
 const employeeRepository = HRDataSource.getRepository(Employee);
 
-// Create a new vacation record
+// Create a new vacation with employee
 vacationRouter.post("/", async (req: Request, res: Response) => {
-    const { employeeId, vacationDate, vacationDays } = req.body;
-
-    const employee = await employeeRepository.findOneBy({ id: employeeId });
-    if (!employee) {
-        return res.BadRequest("Employee not found");
-    }
-
-    const vacationRecord = vacationRepository.create({
-        employee,
-        vacationDate,
-        vacationDays,
-    });
+    const { employeeId, ...vacationData } = req.body;
 
     try {
-        const savedRecord = await vacationRepository.save(vacationRecord);
-        res.Ok(savedRecord);
+        const employee = await employeeRepository.findOneBy({ id: employeeId });
+        if (!employee) {
+            return res.BadRequest("Employee not found");
+        }
+
+        const vacation = vacationRepository.create({
+            ...vacationData,
+            employee,
+        });
+
+        const savedVacation = await vacationRepository.save(vacation);
+        res.Ok(savedVacation); // Using your custom response function
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error saving vacation");
     }
 });
 
-// Read all vacation records
+// Read all vacations with employee details
 vacationRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const records = await vacationRepository.find({ relations: ["employee"] });
-        res.Ok(records);
+        const vacations = await vacationRepository.find({ relations: ["employee"] });
+        res.Ok(vacations); // Using your custom response function
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving vacations");
     }
 });
 
-// Read a single vacation record by ID
+// Read a single vacation by ID with employee details
 vacationRouter.get("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const record = await vacationRepository.findOne({
+        const vacation = await vacationRepository.findOne({
             where: { id: Number(id) },
             relations: ["employee"],
         });
-        if (record) {
-            res.Ok(record);
+        if (vacation) {
+            res.Ok(vacation); // Using your custom response function
         } else {
-            res.BadRequest("Vacation record not found");
+            res.BadRequest("Vacation not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving vacation");
     }
 });
 
-// Update a vacation record by ID
 vacationRouter.put("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { employeeId, ...vacationData } = req.body;
+
     try {
-        const record = await vacationRepository.findOneBy({ id: Number(id) });
-        if (record) {
-            vacationRepository.merge(record, req.body);
-            const updatedRecord = await vacationRepository.save(record);
-            res.Ok(updatedRecord);
+        const vacation = await vacationRepository.findOneBy({ id: Number(id) });
+        if (vacation) {
+            vacationRepository.merge(vacation, vacationData);
+            const updatedVacation = await vacationRepository.save(vacation);
+            res.Ok(updatedVacation); // Using your custom response function
         } else {
-            res.BadRequest("Vacation record not found");
+            res.BadRequest("Vacation not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error updating vacation");
     }
 });
 
-// Delete a vacation record by ID
+// Delete a vacation by ID
 vacationRouter.delete("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
         const result = await vacationRepository.delete(Number(id));
         if (result.affected) {
-            res.Ok({ message: "Vacation record deleted successfully" });
+            res.Ok({ message: "Vacation deleted successfully" }); // Using your custom response function
         } else {
-            res.BadRequest("Vacation record not found");
+            res.BadRequest("Vacation not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error deleting vacation");
     }
 });
 

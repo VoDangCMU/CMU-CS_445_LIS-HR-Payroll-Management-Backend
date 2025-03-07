@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Employee } from './employee.entity';
 
-@Entity('vacation_records')
-export class VacationRecord {
+@Entity('vacation')
+export class Vacation {
     @PrimaryGeneratedColumn({type: 'bigint'})
     id: number;
 

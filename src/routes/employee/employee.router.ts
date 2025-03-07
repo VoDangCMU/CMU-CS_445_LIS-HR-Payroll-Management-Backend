@@ -1,4 +1,3 @@
-// src/routes/hr/employee.router.ts
 import express, { Request, Response } from "express";
 import { Employee } from "@root/datasources/hr/entity/employee.entity";
 import { Department } from "@root/datasources/hr/entity/department.entity";
@@ -26,18 +25,19 @@ employeeRouter.post("/", async (req: Request, res: Response) => {
         const savedEmployee = await employeeRepository.save(employee);
         res.Ok(savedEmployee);
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error saving employee");
     }
 });
 
 // Read all employees
 employeeRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const employees = await employeeRepository.find({ relations: ["department", "employeeBenefits"] });
+        const employees = await employeeRepository.find({ relations: ["department"] });
         res.Ok(employees);
     } catch (error) {
-        console.error(error)
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving employees");
     }
 });
 
@@ -47,7 +47,7 @@ employeeRouter.get("/:id", async (req: Request, res: Response) => {
     try {
         const employee = await employeeRepository.findOne({
             where: { id: Number(id) },
-            relations: ["department", "employeeBenefits"],
+            relations: ["department"],
         });
         if (employee) {
             res.Ok(employee);
@@ -55,7 +55,8 @@ employeeRouter.get("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Employee not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error retrieving employee");
     }
 });
 
@@ -81,7 +82,8 @@ employeeRouter.put("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Employee not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error updating employee");
     }
 });
 
@@ -96,7 +98,8 @@ employeeRouter.delete("/:id", async (req: Request, res: Response) => {
             res.BadRequest("Employee not found");
         }
     } catch (error) {
-        res.InternalServerError("");
+        console.error(error);
+        res.InternalServerError("Error deleting employee");
     }
 });
 
