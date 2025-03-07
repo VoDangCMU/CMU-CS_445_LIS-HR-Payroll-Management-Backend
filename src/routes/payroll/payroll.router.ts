@@ -67,7 +67,7 @@ payrollRouter.get("/", async (req: Request, res: Response) => {
 payrollRouter.get("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const record = await payrollRepository.findOneBy({ id: new ObjectId(id) });
+        const record = await payrollRepository.findOneBy({ _id: new ObjectId(id) });
         if (record) {
             const employee = await employeeRepository.findOneBy({ id: record.employeeID });
             res.Ok({ ...record, employee }); // Include employee data in the response
@@ -83,19 +83,11 @@ payrollRouter.get("/:id", async (req: Request, res: Response) => {
 // Update a payroll record by ID
 payrollRouter.put("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { employeeID, payDate } = req.body;
 
     try {
-        const record = await payrollRepository.findOneBy({ id: new ObjectId(id) });
-        if (record) {
-            // Check for existing payroll record for the same employee and pay date
-            if (employeeID && payDate) {
-                const existingRecord = await payrollRepository.findOneBy({ employeeID, payDate });
-                if (existingRecord && existingRecord.id !== record.id) {
-                    return res.BadRequest("Payroll record for this employee and pay date already exists");
-                }
-            }
+        const record = await payrollRepository.findOneBy({ _id: new ObjectId(id) });
 
+        if (record) {
             payrollRepository.merge(record, req.body);
             const updatedRecord = await payrollRepository.save(record);
             const employee = await employeeRepository.findOneBy({ id: updatedRecord.employeeID });

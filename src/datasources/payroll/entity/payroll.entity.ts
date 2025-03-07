@@ -4,7 +4,7 @@ import {ObjectId} from "bson";
 @Entity('payroll_records')
 export class PayrollRecord {
     @ObjectIdColumn()
-    id: ObjectId;
+    _id: ObjectId;
 
     @Column()
     employeeID: number;
